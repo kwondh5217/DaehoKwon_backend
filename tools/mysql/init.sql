@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS `accounts`
     `updated_at`     datetime(6)   NOT NULL,
     `deleted`        bit(1)        NOT NULL DEFAULT b'0',
     `deleted_at`     datetime(6)   DEFAULT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_accounts_account_number` (`account_number`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
     COMMENT '계좌';
