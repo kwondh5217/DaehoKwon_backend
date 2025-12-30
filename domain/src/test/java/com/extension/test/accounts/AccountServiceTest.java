@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
+import com.extension.test.exception.AccountNotFoundException;
 import com.extension.test.exception.DuplicateAccountNumberException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,6 +34,20 @@ class AccountServiceTest {
     // when & then
     assertThrows(DuplicateAccountNumberException.class, () -> {
       accountService.createAccount(duplicateAccountNumber);
+    });
+  }
+
+  @DisplayName("삭제할 계좌가 존재하지 않다면 커스텀 예외를 반환한다")
+  @Test
+  void deleteAccount_notExistAccount_fail() {
+    // given
+    String notExistsAccountNumber = "12345678";
+    given(accountRepository.findByAccountNumber(notExistsAccountNumber))
+        .willThrow(new AccountNotFoundException(notExistsAccountNumber));
+
+    // when & then
+    assertThrows(AccountNotFoundException.class, () -> {
+      accountService.deleteAccount(notExistsAccountNumber);
     });
   }
 }
