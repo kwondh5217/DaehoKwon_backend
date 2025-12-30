@@ -20,8 +20,8 @@ public class Account {
   private String accountNumber;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "status_type", nullable = false)
-  private AccountStatusType statusType;
+  @Column(name = "status", nullable = false)
+  private AccountStatusType status;
 
   @Column(name = "balance", nullable = false)
   private long balance;
@@ -40,7 +40,7 @@ public class Account {
 
   public Account(String accountNumber) {
     this.accountNumber = accountNumber;
-    this.statusType = AccountStatusType.ACTIVE;
+    this.status = AccountStatusType.ACTIVE;
     this.balance = 0L;
     this.deleted = false;
     this.createdAt = LocalDateTime.now();
