@@ -74,12 +74,12 @@ public class Account {
     public void withdraw(long amount) {
         checkAmountIsNotNegative(amount);
         checkAccountStatus();
-        Assert.isTrue(this.balance >= amount, "잔액이 부족합니다.");
+        Assert.state(this.balance >= amount, "잔액이 부족합니다.");
         this.balance -= amount;
     }
 
     public void checkAccountStatus() {
-        Assert.isTrue(this.status != AccountStatusType.CLOSED && !this.deleted,
+        Assert.state(this.status != AccountStatusType.CLOSED && !this.deleted,
                 "사용할 수 없는 계좌입니다.");
     }
 
