@@ -5,5 +5,6 @@ import java.time.LocalDateTime;
 public interface TransactionRepositoryCustom {
 
   long sumTodayWithdrawAmount(Long accountId, LocalDateTime from, LocalDateTime to);
+  long sumTodayTransferAmount(Long accountId, LocalDateTime from, LocalDateTime to);
 }
 

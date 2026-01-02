@@ -3,6 +3,8 @@ package com.extension.test.api;
 import com.extension.test.api.dto.ApiResponse;
 import com.extension.test.api.dto.DepositRequest;
 import com.extension.test.api.dto.DepositResponse;
+import com.extension.test.api.dto.TransferRequest;
+import com.extension.test.api.dto.TransferResponse;
 import com.extension.test.api.dto.WithdrawRequest;
 import com.extension.test.api.dto.WithdrawResponse;
 import com.extension.test.transactions.TransactionService;
@@ -39,5 +41,16 @@ public class TransactionController {
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(ApiResponse.success(new WithdrawResponse(txId)));
+    }
+
+    @PostMapping("/{accountNumber}/transfer")
+    public ResponseEntity<ApiResponse<TransferResponse>> transfer(
+        @PathVariable String accountNumber,
+        @Valid @RequestBody TransferRequest req
+    ) {
+        Long txId = transactionService.transfer(accountNumber, req.toAccountNumber(), req.amount());
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(ApiResponse.success(new TransferResponse(txId)));
     }
 }

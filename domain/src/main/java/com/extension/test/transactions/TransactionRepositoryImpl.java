@@ -27,4 +27,22 @@ public class TransactionRepositoryImpl implements TransactionRepositoryCustom {
 
     return sum == null ? 0L : sum;
   }
+
+  @Override
+  public long sumTodayTransferAmount(Long accountId, LocalDateTime from, LocalDateTime to) {
+    QTransaction tx = QTransaction.transaction;
+
+    Long sum = queryFactory.select(tx.amount.sum())
+        .from(tx)
+        .where(
+            tx.transactionType.eq(TransactionType.TRANSFER),
+            tx.status.eq(TransactionStatusType.SUCCESS),
+            tx.fromAccountId.eq(accountId),
+            tx.occurredAt.goe(from),
+            tx.occurredAt.lt(to)
+        )
+        .fetchOne();
+
+    return sum == null ? 0L : sum;
+  }
 }
