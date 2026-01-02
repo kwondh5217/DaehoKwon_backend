@@ -17,13 +17,6 @@ services:
       timeout: 3s
       retries: 20
 
-  redis:
-    image: redis:7.4-alpine
-    ports:
-      - "63790:6379"
-    volumes:
-      - test-redis:/data
-
   api:
     build:
       context: ..
